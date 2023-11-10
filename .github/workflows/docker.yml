@@ -108,3 +108,4 @@ jobs:
           build-args: |
             GODOT_VERSION=${{ matrix.godot_version }}
             GODOT_URL=${{ env.GODOT_URL }}
+            TEMPLATES_URL=${{ env.TEMPLATES_URL }}
