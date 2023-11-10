@@ -3,6 +3,11 @@ FROM ubuntu:22.04 AS builder
 # Install Godot & templates
 ARG GODOT_VERSION
 ARG GODOT_URL
+
+# Echo the args
+RUN echo "GODOT_VERSION: ${GODOT_VERSION}"
+RUN echo "GODOT_URL: ${GODOT_URL}"
+
 RUN apt update -y \
     && apt install -y wget unzip \
     && wget ${GODOT_URL} \

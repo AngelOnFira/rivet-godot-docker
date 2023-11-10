@@ -101,5 +101,6 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/${{ env.REPO }}/godot:${{ matrix.godot_version }}
-          build-args: GODOT_VERSION=${{ matrix.godot_version }}
+          build-args: |
+            GODOT_VERSION=${{ matrix.godot_version }}
             GODOT_URL=${{ env.GODOT_URL }}
