@@ -66,8 +66,8 @@ jobs:
             "4.1.1",
             "4.1.2",
             "4.1.3",
-            "4.2",
-          ] # Add more versions as needed
+            # "4.2", # Not yet released
+          ]
 
     steps:
       - name: Checkout repository
@@ -87,6 +87,14 @@ jobs:
         run: |
           echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
 
+      - name: Determine Godot download URL
+        run: |
+          if [[ "${{ matrix.godot_version }}" == 3.* || "${{ matrix.godot_version }}" == 2.* ]]; then
+            echo "GODOT_URL=https://downloads.tuxfamily.org/godotengine/${{ matrix.godot_version }}/Godot_v${{ matrix.godot_version }}-stable_linux_headless.64.zip" >>${GITHUB_ENV}
+          else
+            echo "GODOT_URL=https://downloads.tuxfamily.org/godotengine/${{ matrix.godot_version }}/Godot_v${{ matrix.godot_version }}-stable_linux.x86_64.zip" >>${GITHUB_ENV}
+          fi
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
@@ -94,3 +102,4 @@ jobs:
           push: true
           tags: ghcr.io/${{ env.REPO }}/godot:${{ matrix.godot_version }}
           build-args: GODOT_VERSION=${{ matrix.godot_version }}
+            GODOT_URL=${{ env.GODOT_URL }}
