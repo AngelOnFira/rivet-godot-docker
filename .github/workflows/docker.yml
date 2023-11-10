@@ -12,7 +12,6 @@ jobs:
     strategy:
       matrix:
         godot_version: [
-            "1.1",
             "2.0",
             "2.0.1",
             "2.0.2",
@@ -89,8 +88,10 @@ jobs:
 
       - name: Determine Godot download URL
         run: |
-          if [[ "${{ matrix.godot_version }}" == 3.* || "${{ matrix.godot_version }}" == 2.* ]]; then
+          if [[ "${{ matrix.godot_version }}" == 3.* ]]; then
             echo "GODOT_URL=https://downloads.tuxfamily.org/godotengine/${{ matrix.godot_version }}/Godot_v${{ matrix.godot_version }}-stable_linux_headless.64.zip" >>${GITHUB_ENV}
+          elif [[ "${{ matrix.godot_version }}" == 2.* ]]; then
+            echo "GODOT_URL=https://downloads.tuxfamily.org/godotengine/${{ matrix.godot_version }}/Godot_v${{ matrix.godot_version }}_stable_linux_server.64.zip" >>${GITHUB_ENV}
           else
             echo "GODOT_URL=https://downloads.tuxfamily.org/godotengine/${{ matrix.godot_version }}/Godot_v${{ matrix.godot_version }}-stable_linux.x86_64.zip" >>${GITHUB_ENV}
           fi
